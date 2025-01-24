@@ -1,0 +1,58 @@
+<html>
+
+    <head>
+        <title>Groups - Home</title>
+        <link rel="stylesheet" href="/css/style.css">
+        <link rel="stylesheet" href="/css/login.css">
+    </head>
+
+    <body>
+
+        <header>
+
+            <img src="images/pepe.jpg">
+
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/groups">Groups</a></li>
+                {{#if authenticated}}
+                    <li>
+                        <form method="POST" action="/logout">
+                            <input type="submit" value="Logout">
+                        </form>
+                    </li>
+                {{else}}
+                    <li><a href="/login" >Login</a></li>    
+                {{/if}}
+            </ul>
+
+        </header>
+
+        <main>
+
+            <form method="post">
+
+                <h2> LOGIN </h2>
+
+                <div>
+                    <label for="username">Username</label>
+                    <input name="username" placeholder="football" type="text">
+                </div>
+
+                <div>
+                    <label for="password">Password</label>
+                    <input name="password" placeholder="******" type="password">
+                </div>
+
+                <button type="submit">Continuar</button>
+                <p>Ainda não tenho uma conta. <a href="/register">Clique para criar</a></p>
+
+            </form>
+
+            </div>
+
+        </main>
+
+    </body>
+
+</html>

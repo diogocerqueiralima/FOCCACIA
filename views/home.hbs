@@ -1,0 +1,54 @@
+<html>
+
+    <head>
+        <title>Groups - Home</title>
+        <link rel="stylesheet" href="/css/style.css">
+        <link rel="stylesheet" href="/css/home.css">
+    </head>
+
+    <body>
+
+        <header>
+
+            <img src="images/pepe.jpg">
+
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/groups">Groups</a></li>
+                {{#if authenticated}}
+                    <li>
+                        <form method="POST" action="/logout">
+                            <input type="submit" value="Logout">
+                        </form>
+                    </li>
+                {{else}}
+                    <li><a href="/login" >Login</a></li>    
+                {{/if}}    
+            </ul>
+
+        </header>
+
+        <main>
+
+            <div class="information">
+                <h2>FOCCACIA APPLICATION</h2>
+                <p>Esta aplicação foi desenvolvida no âmbito da cadeira de Programação na Internet do 5º semestre do curso de Engenharia Informática, Redes e Telecomunicações.</p>
+            </div>
+
+            <div class="authors">
+
+                <h4>Autores</h4>
+
+                <ul>
+                    <li>50870 - Mihail Arcus</li>
+                    <li>50879 - Diogo Lima</li>
+                    <li>51011 - Lucas Silva</li> 
+                </ul>
+
+            </div>
+
+        </main>
+
+    </body>
+
+</html>

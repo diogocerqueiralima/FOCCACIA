@@ -1,0 +1,79 @@
+main .groups {
+
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 40px;
+    flex-wrap: wrap;
+
+}
+
+main .groups .group {
+
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    background-color: #d4d2cd;
+    padding: 80px 40px;
+    border-radius: 10px;
+    padding-bottom: 10px;
+
+}
+
+main .groups .group form {
+
+    display: flex;
+    flex-direction: column;
+    gap: 60px;
+
+}
+
+main .groups .group input,
+main .groups .group textarea {
+
+    background-color: #d4d2cd;
+    outline: none;
+    border: 1px solid white;
+    background-color: white;
+    border-radius: 5px;
+    padding: 5px 10px;
+    transition: 0.5s;
+
+}
+
+main .groups .group input:focus,
+main .groups .group textarea:focus {
+
+    border: 1px solid black;
+
+}
+
+main .groups .group button {
+
+    border-radius: 10px;
+    padding: 5px 0;
+    transition: 0.5s;
+
+}
+
+main .groups .group button:hover {
+
+    cursor: pointer;
+
+}
+
+main .groups .group div {
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 10px;
+
+}
+
+main .groups .group label {
+
+    display: flex;
+    flex-direction: column;
+
+}

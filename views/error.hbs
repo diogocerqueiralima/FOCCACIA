@@ -1,0 +1,36 @@
+<html>
+    
+    <head>
+        <title>Groups - Error</title>
+        <link rel="stylesheet" href="/css/style.css">
+    </head>
+
+    <body>
+
+        <header>
+
+            <img src="/images/pepe.jpg">
+
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/groups">Groups</a></li>
+                {{#if authenticated}}
+                    <li>
+                        <form method="POST" action="/logout">
+                            <input type="submit" value="Logout">
+                        </form>
+                    </li>
+                {{else}}
+                    <li><a href="/login" >Login</a></li>    
+                {{/if}}
+            </ul>
+
+        </header>
+
+        <main>
+
+            <h1>An error occurred: {{error}}</h1>
+
+        </main>
+
+</html>

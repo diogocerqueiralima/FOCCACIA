@@ -1,0 +1,511 @@
+openapi: 3.0.3
+info:
+  title: Foccacia
+  description: |-
+    Trabalho realizado no âmbito da cadeira de Progragramação na Internet.
+    Elementos do Grupo 1 : 50879 -  Diogo Lima, 51011 - Lucas Silva, 50870 - Mihail Arcus.
+  version: 1.0.0
+servers:
+  - url: http://localhost:9000
+tags:
+  - name: Groups
+    description: Everything about your Football Groups
+  - name: Users
+    description: Operations about users
+  - name: Teams
+    description: Operations about teams
+  - name: Leagues
+    description: Operations about leagues
+paths:
+  /api/groups:
+    post:
+      security:
+        - UserAuthorization: []
+      tags:
+        - Groups
+      summary: Create a Group
+      operationId: CreateGroup
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateGroupRequest'
+        required: true
+      responses:
+        '200':
+          description: Group created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateGroup'     
+        '400':
+          description: Invalid body
+        '401':
+          description: Invalid token
+    get:
+      security:
+        - UserAuthorization: []
+      tags:
+        - Groups
+      summary: Get all Groups
+      operationId: GetGroup
+      responses:
+        '200':
+          description: Group created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Groups'
+        '401':
+          description: Invalid token
+  /api/groups/{id}:
+    parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+        description: ID of the group to retrieve
+    get:
+      security:
+        - UserAuthorization: []
+      tags: 
+        - Groups
+      summary: Get group by id
+      operationId: GetGroupById
+      responses:
+        '200':
+          description: Group retrieved successfully
+          content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/GetGroupById'
+        '400':
+          description: Bad group id
+        '401':
+          description: Invalid token
+        '403':
+          description: The group is not yours
+        '404':
+          description: Group not found
+    put:
+      security:
+        - UserAuthorization: []
+      tags: 
+        - Groups
+      summary: Update group by id
+      operationId: UpdateGroupById
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EditGroupByIdRequest'
+        required: true
+      responses:
+        '200':
+          description: Group edited successfully
+          content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/EditGroupById'
+        '400':
+          description: Bad group id
+        '401':
+          description: Invalid token
+        '403':
+          description: The group is not yours
+        '404':
+          description: Group not found
+    delete:
+      security:
+        - UserAuthorization: []
+      tags:
+        - Groups
+      summary: Delete group by id
+      operationId: DeleteGroupById
+      responses:
+        '200':
+          description: Group deleted successfully
+          content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/DeleteGroupById'
+        '400':
+          description: Bad group id
+        '401':
+          description: Invalid token
+        '403':
+          description: The group is not yours
+        '404':
+          description: Group not found
+  /api/groups/{id}/teams/{teamId}/league/{leagueId}/season/{season}:
+    parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+        description: ID of the group to retrieve
+      - name: teamId
+        in: path
+        required: true
+        schema:
+          type: string
+        description: ID of the team
+      - name: leagueId
+        in: path
+        required: true
+        schema:
+          type: string
+        description: ID of the league
+      - name: season
+        in: path
+        required: true
+        schema:
+          type: number
+        description: season year
+    put:
+      security:
+        - UserAuthorization: []
+      tags: 
+        - Groups
+      summary: Add a team to a group
+      operationId: AddTeam
+      responses:
+        '200':
+          description: Team added successfully
+          content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/AddTeam'
+        '400':
+          description: Bad group id, team id, league id or season, team already in this group
+        '401':
+          description: Invalid token
+        '403':
+          description: The group is not yours
+        '404':
+          description: Group not found
+    delete:
+        security:
+          - UserAuthorization: []
+        tags: 
+          - Groups
+        summary: Remove team from a group
+        operationId: RemoveTeam
+        responses:
+          '200':
+            description: Team removed successfully
+            content:
+                application/json:
+                  schema:
+                    $ref: '#/components/schemas/RemoveTeam'
+          '400':
+            description: Bad group id, team id, league id or season
+          '401':
+            description: Invalid token
+          '403':
+            description: The group is not yours
+          '404':
+            description: Group or Team not found
+  /api/users:
+    post:
+      tags:
+        - Users
+      summary: Create a new user
+      operationId: CreateUser
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateUserRequest'
+        required: true
+      responses:
+        '200':
+          description: User created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateUser'
+        '400':
+          description: Bad user id or username already exists
+  /api/teams:
+    get:
+      tags:
+        - Teams
+      summary: Get teams by name
+      operationId: GetTeamsByName
+      parameters:
+        - in: query
+          name: name
+          schema:
+            type: string
+          description: Name of the team
+      responses:
+        '200':
+          description: Teams retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetTeamsByName'
+        '400':
+          description: Invalid team name
+  /api/leagues/{teamId}:
+    get:
+      parameters:
+      - name: teamId
+        in: path
+        required: true
+        schema:
+          type: string
+        description: ID of the team
+      tags:
+        - Leagues
+      summary: Get leagues by team
+      operationId: GetLeagues
+      responses:
+        '200':
+          description: League retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetLeagues'
+      
+components:
+  securitySchemes:
+    UserAuthorization:
+      type: apiKey
+      in: header
+      name: Authorization
+  schemas:
+    CreateGroupRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          example: Grupo 01
+        description:
+          type: string
+          example: Melhores equipas da Europa
+    CreateGroup:
+      type: object
+      properties:
+        message:
+          type: string
+          example: Group created successfully
+        data:
+          type: object
+          properties:
+            name:
+              type: string
+              example: Grupo 01
+            description:
+              type: string
+              example: Melhores equipas da Europa
+            userId:
+                type: string
+                example: caracteresAleatorios
+            id:
+              type: string
+              example: caracteresAleatorios
+            teams:
+              type: array
+              items: 
+                type: object
+              example: []
+    Groups:
+      type: object
+      properties:
+        message:
+          type: string
+          example: Group retrieved successfully
+        data:
+          type: array
+          items: 
+            type: object
+            properties:
+              name:
+                type: string
+                example: Grupo 01
+              description:
+                type: string
+                example: Melhores equipas da Europa
+              userId:
+                type: string
+                example: caracteresAleatorios
+              id:
+                type: string
+                example: caracteresAleatorios
+              teams:
+                type: array
+                items: 
+                  type: object
+                example: []
+    GetGroupById:
+      type: object
+      properties:
+        message:
+          type: string
+          example: Group retrieved successfully
+        data:
+          type: object
+          properties:
+              name:
+                type: string
+                example: Grupo 01
+              description:
+                type: string
+                example: Melhores equipas da Europa
+              userId:
+                type: string
+                example: caracteresAleatorios
+              id:
+                type: string
+                example: caracteresAleatorios
+              teams:
+                type: array
+                items: 
+                  type: object
+                example: []
+    EditGroupById:
+      type: object
+      properties:
+        message:
+          type: string
+          example: Group edited successfully
+        data:
+          type: object
+          properties:
+              name:
+                type: string
+                example: Melhores equipas
+              description:
+                type: string
+                example: Melhores equipas do Mundo
+              userId:
+                type: string
+                example: caracteresAleatorios
+              id:
+                type: string
+                example: caracteresAleatorios
+              teams:
+                type: array
+                items:
+                  type: object
+                example: []
+    EditGroupByIdRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          example: Melhores equipas
+        description:
+          type: string
+          example: Melhores equipas do Mundo
+    DeleteGroupById:
+      type: object
+      properties:
+        message:
+          type: string
+          example: Group deleted successfully
+        data:
+          type: object
+          properties:
+              id:
+                type: string
+                example: caracteresAleatorios
+    AddTeam:
+      type: object
+      properties:
+        message:
+          type: string
+          example: Group added successfully
+        data:
+          type: object
+          properties:
+              name:
+                type: string
+                example: Melhores equipas
+              description:
+                type: string
+                example: Melhores equipas do Mundo
+              userId:
+                type: string
+                example: caracteresAleatorios
+    GetTeamsByName:
+      type: object
+      properties:
+        message:
+          type: string
+          example: Teams retrieved successfully
+        data:
+          type: object
+          properties:
+              id:
+                type: number
+                example: 529
+              name:
+                type: string
+                example: Barcelona
+              stadium:
+                type: string
+                example: Estadi Olímpic Lluís Companys
+    GetLeagues:
+      type: object
+      properties:
+        message:
+          type: string
+          example: LEagues retrieved successfully
+        data:
+          type: object
+          properties:
+              id:
+                type: number
+                example: 94
+              name:
+                type: string
+                example: La Liga
+    RemoveTeam:
+      type: object
+      properties:
+        message:
+          type: string
+          example: Group added successfully
+        data:
+          type: object
+          properties:
+              name:
+                type: string
+                example: Melhores equipas
+              description:
+                type: string
+                example: Melhores equipas do Mundo
+              userId:
+                type: string
+                example: caracteresAleatorios
+              id:
+                type: string
+                example: caracteresAleatorios
+              teams:
+                type: array
+                items:
+                  type: object
+                example: []
+    CreateUserRequest:
+      type: object
+      properties:
+        username:
+          type: string
+          example: Diogo
+    CreateUser:
+      type: object
+      properties:
+        message:
+          type: string
+          example: User created successfully
+        data:
+          type: object
+          properties:
+            token:
+              type: string
+              example: 4c242e1d-1985-44d4-9443-b53fe96776c8

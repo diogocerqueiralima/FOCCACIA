@@ -1,0 +1,91 @@
+<html>
+
+    <head>
+        <title>Groups - Home</title>
+        <link rel="stylesheet" href="/css/style.css">
+        <link rel="stylesheet" href="/css/groupTeams.css">
+        <script src="/scripts/teams.js"></script>
+    </head>
+
+    <body>
+
+        <header>
+
+            <img src="/images/pepe.jpg">
+
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/groups">Groups</a></li>
+                {{#if authenticated}}
+                    <li>
+                        <form method="POST" action="/logout">
+                            <input type="submit" value="Logout">
+                        </form>
+                    </li>
+                {{else}}
+                    <li><a href="/login" >Login</a></li>    
+                {{/if}}
+            </ul>
+
+        </header>
+
+        <main>
+
+           <div class="teams">
+
+                <div class="team addTeam">
+
+                    <input type="text" id="season" placeholder="Season">
+
+                    <div id="theLeague">
+
+                        <select size="1">
+                            <option value="" disabled selected>Select a League</option>
+                        </select>
+
+                    </div>
+
+                    <div id="theTeam">
+
+                        <select size="1">
+                            <option value="" disabled selected>Select a Team</option>
+                        </select>
+
+                    </div>
+
+                    <button id="addTeam" disabled>Adicionar</button>
+
+                </div>
+
+                {{#each teams}}
+
+                    <div class="team">
+
+                        <img src="{{image}}">
+
+                        <div class="information">
+
+                            <p>Name: {{name}}</p>
+                            <p>Stadium: {{stadium}}</p>
+                            <p>League: {{leagueName}}</p>
+                            <p>Season: {{season}}</p>
+
+                        </div>
+
+                        <div class="actions">
+
+                            <button class="remove" teamId="{{id}}" leagueId="{{leagueId}}" season="{{season}}">Remove</button>
+
+                        </div>
+                        
+                    </div>
+
+                {{/each}}
+
+           </div>
+
+        </main>
+
+    </body>
+
+</html>
