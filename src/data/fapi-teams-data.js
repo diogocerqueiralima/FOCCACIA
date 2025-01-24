@@ -1,6 +1,4 @@
-import { response } from "express"
-
-const apiKey = "80879448a7db0e314e2270df46e575e5"
+const apiKey = process.env.API_KEY
 
 function getTeamsByName(name) {
 
